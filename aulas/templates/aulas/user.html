@@ -2,11 +2,36 @@
 {% extends "aulas/layout.html" %}
 
 {% block body %}
-    <h1>Welcome, {{ request.user.first_name }}</h1>
-    <ul>
-        <li>Username: {{ request.user.username }}</li>
-        <li>Email: {{ request.user.email }}</li>
-    </ul>
 
-    <a href="{% url 'logout' %}">Log Out</a>
+    {% if message %}
+        <h1>Bemvindo, {{ message }}</h1>
+        <a href="{% url 'login' %}">Log In</a>
+    {% else %}
+        <h1>Bemvindo, {{ request.user.username }}</h1>
+        <ul>
+            <li>Username: {{ request.user.username }}</li>
+            <li>Email: {{ request.user.email }}</li>
+        </ul>
+        <h1>Agenda Usuario:</h1>
+        <ul>
+            {% for item in aulas_user %}
+                <li>Aula {{ item.data_aula }}: {{ item.hora_inicio }} {{ item.hora_fim }} : {{ item.aula.aula }} Capacidade : {{ item.aula.numero_alunos }}</li>
+            {% endfor %}
+        </ul>
+        <h1>Todas as aulas:</h1>
+        <ul>
+            {% for item in classes %}
+                <li>Aula {{ item.data_aula }}: {{ item.hora_inicio }} {{ item.hora_fim }} : {{ item.aula.aula }} Capacidade : {{ item.aula.numero_alunos }}</li>
+            {% endfor %}
+        </ul>
+        <h1>Próximas aulas:</h1>
+        <ul>
+            {% for item in filtro %}
+                <li>Aula {{ item.data_aula }}: {{ item.hora_inicio }} {{ item.hora_fim }} : {{ item.aula.aula }} Capacidade : {{ item.aula.numero_alunos }}</li>
+            {% endfor %}
+        </ul>
+        <a href="{% url 'logout' %}">Agendamento</a>
+        <a href="{% url 'logout' %}">Log Out</a>
+    {% endif %}
+
 {% endblock %}

@@ -1,8 +1,8 @@
 from django.contrib import admin
 
-from .models import Aulas, Agenda, Aluno
+from .models import Aula, Agenda, Usuario
 
 # Register your models here.
-admin.site.register(Aulas)
+admin.site.register(Aula)
 admin.site.register(Agenda)
-admin.site.register(Aluno)
+admin.site.register(Usuario)

@@ -2,14 +2,33 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
-from .models import Aulas, Schedule
+from .models import Aula, Agenda, Usuario
+import datetime
 
 # Create your views here.
 def index(request):
     # If no user is signed in, return to login page:
     if not request.user.is_authenticated:
-        return HttpResponseRedirect(reverse("login"))
-    return render(request, "aulas/user.html")
+        return render(request, "aulas/user.html", {
+            "message": "Anonimo"
+        })
+    username = request.user.id
+    print(f"username id: {username}"  )
+    print(f"usuarios : {Usuario.objects.all()}"  )
+    aulas_usuario = Usuario.objects.filter(id=username)
+    print(aulas_usuario)
+    aulas = Agenda.objects.filter(aulas__username=username)
+    print(aulas)
+    classes = Agenda.objects.all()
+    print(classes)
+    filtro = Agenda.objects.filter(data_aula__gte=datetime.date(2022, 5, 26))
+    print(filtro)
+    return render(request, "aulas/user.html", {
+        "user"       : aulas_usuario,
+        "aulas_user" : aulas,
+        "classes"    : classes,
+        "filtro"    : filtro
+    } )
 
 def login_view(request):
     if request.method == "POST":

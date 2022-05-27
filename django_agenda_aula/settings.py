@@ -122,3 +122,4 @@ STATIC_URL = '/static/'
 
 # django_project/settings.py
 LOGIN_REDIRECT_URL = "/"
+

@@ -1,28 +1,43 @@
+from django.conf import settings
 from django.db import models
 
 # Create your models here.
-class Aulas(models.Model):
-    aula_code        = models.CharField(max_length=3)
-    aula_description = models.CharField(max_length=64)
+class Aula(models.Model):
+    aula = models.CharField(max_length=64)
 
     def __str__(self):
-        return f"{self.aula_description} ({self.aula_code})"
+        return f"{self.aula}"
 
-class Schedule(models.Model):
+class Agenda(models.Model):
     data_aula = models.DateField(default='2022-05-09')
+    aula = models.ForeignKey(Aula, on_delete=models.CASCADE, related_name="classes")
     hora_inicio = models.TimeField(default='09:00:00')
     hora_fim = models.TimeField(default='10:00:00')
-    aula_code = models.ForeignKey(Aulas, on_delete=models.CASCADE, related_name="aula", default='TESTE1')
     max_alunos = models.IntegerField(default=8)
+    numero_alunos = models.IntegerField(default=0)
+    class Meta:
+        indexes = [models.Index(fields=["data_aula"])]
+        verbose_name="agenda"
+        verbose_name_plural="agendas"
         
     def __str__(self):
-        return f"{self.aula_code}: {self.data_aula} {self.hora_inicio} {self.hora_fim} {self.aula_code} Capacidade {self.max_alunos}"
+        return f"{self.id}: {self.data_aula} {self.hora_inicio} {self.hora_fim} {self.aula} Capacidade {self.max_alunos}"
 
-class Aluno(models.Model):
-    username = models.CharField(max_length=6)
-    password = models.CharField(max_length=12)
-    first = models.CharField(max_length=64)
-    last = models.CharField(max_length=64)
+class Usuario(models.Model):
+    username = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+    )
+    email = models.EmailField(max_length=200)
+    contato = models.CharField(max_length=30)
+    nome = models.CharField(max_length=100)
+    sobrenome = models.CharField(max_length=100)
+    tipo = models.CharField(max_length=10)
+    agendas = models.ManyToManyField(Agenda, blank=True, related_name="aulas")
+    class Meta:
+        indexes = [models.Index(fields=["username"])]
+        verbose_name="usuario"
+        verbose_name_plural="usuarios"
 
     def __str__(self):
-        return f"{self.username}: {self.first} {self.last}"
+        return f"{self.username}: {self.nome} {self.sobrenome} {self.agendas}"
