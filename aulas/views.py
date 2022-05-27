@@ -21,13 +21,15 @@ def index(request):
     print(aulas)
     classes = Agenda.objects.all()
     print(classes)
-    filtro = Agenda.objects.filter(data_aula__gte=datetime.date(2022, 5, 26))
+    current_date = datetime.date.today()-datetime.timedelta(days=1)
+    print(f"Current date {current_date}")
+    filtro = Agenda.objects.filter(data_aula__gte=current_date)
     print(filtro)
     return render(request, "aulas/user.html", {
         "user"       : aulas_usuario,
         "aulas_user" : aulas,
         "classes"    : classes,
-        "filtro"    : filtro
+        "filtro"     : filtro
     } )
 
 def login_view(request):

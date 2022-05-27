@@ -15,19 +15,19 @@
         <h1>Agenda Usuario:</h1>
         <ul>
             {% for item in aulas_user %}
-                <li>Aula {{ item.data_aula }}: {{ item.hora_inicio }} {{ item.hora_fim }} : {{ item.aula.aula }} Capacidade : {{ item.aula.numero_alunos }}</li>
+                <li>Aula {{ item.data_aula }}: {{ item.hora_inicio }} {{ item.hora_fim }} : {{ item.aula.aula }} Capacidade : {{ item.numero_alunos }}</li>
             {% endfor %}
         </ul>
         <h1>Todas as aulas:</h1>
         <ul>
             {% for item in classes %}
-                <li>Aula {{ item.data_aula }}: {{ item.hora_inicio }} {{ item.hora_fim }} : {{ item.aula.aula }} Capacidade : {{ item.aula.numero_alunos }}</li>
+                <li>Aula {{ item.data_aula }}: {{ item.hora_inicio }} {{ item.hora_fim }} : {{ item.aula.aula }} Capacidade : {{ item.numero_alunos }}</li>
             {% endfor %}
         </ul>
         <h1>Próximas aulas:</h1>
         <ul>
             {% for item in filtro %}
-                <li>Aula {{ item.data_aula }}: {{ item.hora_inicio }} {{ item.hora_fim }} : {{ item.aula.aula }} Capacidade : {{ item.aula.numero_alunos }}</li>
+                <li>Aula {{ item.data_aula }}: {{ item.hora_inicio }} {{ item.hora_fim }} : {{ item.aula.aula }} Capacidade : {{ item.numero_alunos }}</li>
             {% endfor %}
         </ul>
         <a href="{% url 'logout' %}">Agendamento</a>
