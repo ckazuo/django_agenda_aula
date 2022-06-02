@@ -4,6 +4,10 @@ from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse
 from .models import Aula, Agenda, Usuario
 import datetime
+import calendar
+from django.utils.safestring import mark_safe
+from .utils import EventCalendar, EventWeekCalendar
+import locale
 
 # Create your views here.
 def index(request):
@@ -21,15 +25,21 @@ def index(request):
     print(aulas)
     classes = Agenda.objects.all()
     print(classes)
-    current_date = datetime.date.today()-datetime.timedelta(days=1)
-    print(f"Current date {current_date}")
-    filtro = Agenda.objects.filter(data_aula__gte=current_date)
+    locale.setlocale(locale.LC_ALL, 'pt_BR.utf8')
+    yesterday = datetime.date.today()-datetime.timedelta(days=1)
+    print(f"Current date {yesterday}")
+    filtro = Agenda.objects.filter(data_aula__gte=yesterday)
     print(filtro)
+    d = datetime.date.today()
+    cal = EventCalendar()
+    html_calendar = cal.formatmonth(d.year, d.month, withyear=True)
+    html_calendar = html_calendar.replace('<td ', '<td  width="200" height="200"')
     return render(request, "aulas/user.html", {
         "user"       : aulas_usuario,
         "aulas_user" : aulas,
         "classes"    : classes,
-        "filtro"     : filtro
+        "filtro"     : filtro,
+        "calendar"   : mark_safe(html_calendar),
     } )
 
 def login_view(request):
