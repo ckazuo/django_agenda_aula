@@ -1,4 +1,3 @@
-
 {% extends "aulas/layout.html" %}
 
 {% block body %}
@@ -15,7 +14,7 @@
         <h1>Agenda Usuario:</h1>
         <ul>
             {% for item in aulas_user %}
-                <li>Aula {{ item.data_aula }}: {{ item.hora_inicio }} {{ item.hora_fim }} : {{ item.aula.aula }} Capacidade : {{ item.numero_alunos }}</li>
+                <li> {{ item.data_aula }}: {{ item.hora_inicio }} {{ item.hora_fim }} : {{ item.aula.aula }} </li>
             {% endfor %}
         </ul>
         <h1>Todas as aulas:</h1>
@@ -31,6 +30,10 @@
             {% endfor %}
         </ul>
         <a href="{% url 'logout' %}">Agendamento</a>
+        <br/>
+        <h1>Calendario:</h1>
+        {{ calendar }}
+
         <a href="{% url 'logout' %}">Log Out</a>
     {% endif %}
 
