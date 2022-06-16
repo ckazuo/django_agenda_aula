@@ -1,40 +1,46 @@
 {% extends "aulas/layout.html" %}
-
 {% block body %}
 
-    {% if message %}
-        <h1>Bemvindo, {{ message }}</h1>
-        <a href="{% url 'login' %}">Log In</a>
+    <div class="call">
+    {% if message == 'Anonimo' %}
+      
+        <h1>RESERVE SEU HORÁRIO AQUI</h1>
+        <p>Viva uma nova experiência todos os dias</p>
+        <div class="button">             
+          <form action="{% url 'login' %}">
+              <button type="submit" class="btn2">
+              RESERVE AQUI
+              </button>
+          </form>
+        </div>
+      
     {% else %}
-        <h1>Bemvindo, {{ request.user.username }}</h1>
-        <ul>
-            <li>Username: {{ request.user.username }}</li>
-            <li>Email: {{ request.user.email }}</li>
-        </ul>
-        <h1>Agenda Usuario:</h1>
-        <ul>
-            {% for item in aulas_user %}
-                <li> {{ item.data_aula }}: {{ item.hora_inicio }} {{ item.hora_fim }} : {{ item.aula.aula }} </li>
-            {% endfor %}
-        </ul>
-        <h1>Todas as aulas:</h1>
-        <ul>
-            {% for item in classes %}
-                <li>Aula {{ item.data_aula }}: {{ item.hora_inicio }} {{ item.hora_fim }} : {{ item.aula.aula }} Capacidade : {{ item.numero_alunos }}</li>
-            {% endfor %}
-        </ul>
-        <h1>Próximas aulas:</h1>
-        <ul>
-            {% for item in filtro %}
-                <li>Aula {{ item.data_aula }}: {{ item.hora_inicio }} {{ item.hora_fim }} : {{ item.aula.aula }} Capacidade : {{ item.numero_alunos }}</li>
-            {% endfor %}
-        </ul>
-        <a href="{% url 'logout' %}">Agendamento</a>
-        <br/>
-        <h1>Calendario:</h1>
-        {{ calendar }}
 
-        <a href="{% url 'logout' %}">Log Out</a>
+        <h2>Aulas Agendadas, {{ request.user.username }}</h2>
+        </br>
+        <ul>
+            {% if not aulas_user %}
+            <h3>Sem atividades agendadas</h3>
+            </br>
+            {% endif %}
+            {% for item in aulas_user %}
+            
+            <div class="list-group">
+                <ul href="#" class="list-group-item list-group-item-action active">
+                  <div class="d-flex w-100 justify-content-between">
+                    <small>{{ item.data_aula }}</small>
+                    <h3 class="mb-1">{{ item.aula.aula }}</h3>
+                  </div>
+                  <ul>
+                    <h5 class="mb-1">{{ item.hora_inicio }} {{ item.hora_fim }}</h5>
+                  </ul>
+                </ul>
+            </br>
+            </div>
+            {% endfor %}
+        </ul>
+        <a href="{% url 'logout' %}">Logout</a>
     {% endif %}
+    </div>
 
 {% endblock %}

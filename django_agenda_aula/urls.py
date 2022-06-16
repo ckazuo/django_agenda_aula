@@ -20,5 +20,5 @@ from mysqlx import Auth
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('aulas/', include('aulas.urls')),
+    path('', include('aulas.urls')),
 ]

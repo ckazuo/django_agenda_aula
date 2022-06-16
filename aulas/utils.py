@@ -16,7 +16,7 @@ class EventCalendar(HTMLCalendar):
         events_from_day = agendas.filter(data_aula__day=day)
         events_html = "<ul>"
         for event in events_from_day:
-            events_html += f"<button>{event.hora_inicio}:{event.hora_fim} - {event.aula.aula} </button><br>"
+            events_html += f"<button><h5 class='mb-1'>{event.hora_inicio}:{event.hora_fim}<h5> - {event.aula.aula} </button><br>"
         events_html += "</ul>"
  
         if day == 0:

@@ -1,0 +1,30 @@
+{% extends "aulas/layout.html" %}
+{% block body %}
+
+    {% if message %}
+        <h1>Login para ver agenda, {{ message }}</h1>
+        <a href="{% url 'login' %}">Log In</a>
+    {% else %}
+    {% for item in filtro %}
+    <div class="list-group">
+        <ul href="#" class="list-group-item list-group-item-action active">
+          <button>
+          <div class="d-flex w-100 justify-content-between">
+            <small>{{ item.data_aula }}</small>
+            <h3 class="mb-1">{{ item.aula.aula }}</h3>
+          </div>
+          <ul>
+            <h5 class="mb-1">{{ item.hora_inicio }} {{ item.hora_fim }}</h5>
+          </ul>
+          </button>
+        </ul>
+    </br>
+    </div>
+    {% endfor %}    
+        <a href="{% url 'logout' %}">Log Out</a>
+        <button>
+            <h2>Marcar Aula</h2>
+        </button>
+    {% endif %}
+
+{% endblock %}

@@ -10,26 +10,46 @@ from .utils import EventCalendar, EventWeekCalendar
 import locale
 
 # Create your views here.
-def index(request):
+def index(request, extra_context=None):
     # If no user is signed in, return to login page:
     if not request.user.is_authenticated:
         return render(request, "aulas/user.html", {
             "message": "Anonimo"
         })
     username = request.user.id
-    print(f"username id: {username}"  )
-    print(f"usuarios : {Usuario.objects.all()}"  )
-    aulas_usuario = Usuario.objects.filter(id=username)
-    print(aulas_usuario)
-    aulas = Agenda.objects.filter(aulas__username=username)
-    print(aulas)
-    classes = Agenda.objects.all()
-    print(classes)
-    locale.setlocale(locale.LC_ALL, 'pt_BR.utf8')
     yesterday = datetime.date.today()-datetime.timedelta(days=1)
-    print(f"Current date {yesterday}")
+    locale.setlocale(locale.LC_ALL, 'pt_BR.utf8')
+
+    aulas_usuario = Usuario.objects.filter(id=username)
+    aulas = Agenda.objects.filter(data_aula__gte=yesterday).filter(aulas__username=username).order_by('data_aula')
+
+    classes = Agenda.objects.all()
     filtro = Agenda.objects.filter(data_aula__gte=yesterday)
-    print(filtro)
+        
+    after_day = request.GET.get('day__gte', None)
+    extra_context = extra_context or {}
+ 
+    if not after_day:
+        d = datetime.date.today()
+    else:
+        try:
+            split_after_day = after_day.split('-')
+            d = datetime.date(year=int(split_after_day[0]), month=int(split_after_day[1]), day=1)
+        except:
+            d = datetime.date.today()
+ 
+    previous_month = datetime.date(year=d.year, month=d.month, day=1)  # find first day of current month
+    previous_month = previous_month - datetime.timedelta(days=1)  # backs up a single day
+    previous_month = datetime.date(year=previous_month.year, month=previous_month.month, day=1)  # find first day of previous month
+ 
+    last_day = calendar.monthrange(d.year, d.month)
+    next_month = datetime.date(year=d.year, month=d.month, day=last_day[1])  # find last day of current month
+    next_month = next_month + datetime.timedelta(days=1)  # forward a single day
+    next_month = datetime.date(year=next_month.year, month=next_month.month,day=1)  # find first day of next month
+ 
+    extra_context['previous_month'] = reverse('index') + '?day__gte=' + str(previous_month)
+    extra_context['next_month'] = reverse('index') + '?day__gte=' + str(next_month)
+ 
     d = datetime.date.today()
     cal = EventCalendar()
     html_calendar = cal.formatmonth(d.year, d.month, withyear=True)
@@ -67,3 +87,79 @@ def logout_view(request):
     return render(request, "aulas/login.html", {
                 "message": "Logged Out"
             })
+
+def agenda_view(request, extra_context=None):
+    # If no user is signed in, return to login page:
+    if not request.user.is_authenticated:
+        return render(request, "aulas/user.html", {
+            "message": "Anonimo"
+        })
+    username = request.user.id
+    yesterday = datetime.date.today()-datetime.timedelta(days=1)
+    locale.setlocale(locale.LC_ALL, 'pt_BR.utf8')
+
+    aulas_usuario = Usuario.objects.filter(id=username)
+    aulas = Agenda.objects.filter(data_aula__gte=yesterday).filter(aulas__username=username).order_by('data_aula')
+
+    classes = Agenda.objects.all()
+    filtro = Agenda.objects.filter(data_aula__gte=yesterday)
+        
+    after_day = request.GET.get('day__gte', None)
+    extra_context = extra_context or {}
+ 
+    if not after_day:
+        d = datetime.date.today()
+    else:
+        try:
+            split_after_day = after_day.split('-')
+            d = datetime.date(year=int(split_after_day[0]), month=int(split_after_day[1]), day=1)
+        except:
+            d = datetime.date.today()
+ 
+    previous_month = datetime.date(year=d.year, month=d.month, day=1)  # find first day of current month
+    previous_month = previous_month - datetime.timedelta(days=1)  # backs up a single day
+    previous_month = datetime.date(year=previous_month.year, month=previous_month.month, day=1)  # find first day of previous month
+ 
+    last_day = calendar.monthrange(d.year, d.month)
+    next_month = datetime.date(year=d.year, month=d.month, day=last_day[1])  # find last day of current month
+    next_month = next_month + datetime.timedelta(days=1)  # forward a single day
+    next_month = datetime.date(year=next_month.year, month=next_month.month,day=1)  # find first day of next month
+ 
+    extra_context['previous_month'] = reverse('index') + '?day__gte=' + str(previous_month)
+    extra_context['next_month'] = reverse('index') + '?day__gte=' + str(next_month)
+ 
+    d = datetime.date.today()
+    cal = EventCalendar()
+    html_calendar = cal.formatmonth(d.year, d.month, withyear=True)
+    html_calendar = html_calendar.replace('<td ', '<td  width="200" height="200"')
+    return render(request, "aulas/agenda.html", {
+        "user"       : aulas_usuario,
+        "aulas_user" : aulas,
+        "classes"    : classes,
+        "filtro"     : filtro,
+        "calendar"   : mark_safe(html_calendar),
+    } )
+
+def calendar_view(request, extra_context=None):
+    yesterday = datetime.date.today()-datetime.timedelta(days=1)
+    locale.setlocale(locale.LC_ALL, 'pt_BR.utf8')
+        
+    after_day = request.GET.get('day__gte', None)
+    extra_context = extra_context or {}
+ 
+    if not after_day:
+        d = datetime.date.today()
+    else:
+        try:
+            split_after_day = after_day.split('-')
+            d = datetime.date(year=int(split_after_day[0]), month=int(split_after_day[1]), day=1)
+        except:
+            d = datetime.date.today()
+
+    d = datetime.date.today()
+    cal = EventCalendar()
+    html_calendar = cal.formatmonth(d.year, d.month, withyear=True)
+    html_calendar = html_calendar.replace('<td ', '<td  width="200" height="200"')
+    return render(request, "aulas/calendar.html", {
+        "calendar"   : mark_safe(html_calendar),
+    } )
