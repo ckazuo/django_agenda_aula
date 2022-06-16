@@ -1,14 +1,121 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <title>Aulas</title>
-    </head>
-    <nav>
-        <h1>Links de navegação</h1>
-    </nav>
-    <body>
-        <h1>Teste de Layout</h1>
-        {% block body %}
-        {% endblock %}
-    </body>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ESPAÇO + CORPO E SAÚDE</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"
+    />
+    <link rel="stylesheet" href="{% static 'aulas/style.css' %}" />
+  </head>
+  <body>
+    <header>
+      <div class="logo">
+        <img src="{% static 'aulas/logo1_transp.png' %}" alt="" />
+      </div>
+      <div class="menu">
+        <ul>
+          <li><a href="#home">HOME</a></li>
+          <li><a href="#news">MODALIDADES</a></li>
+          <li><a href="{% url 'agenda' %}">AGENDA</a></li>
+          <li><a href="#footer">CONTATO</a></li>
+          <li><a href="{% url 'login' %}">LOGIN</a></li>
+        </ul>
+      </div>
+      <div class="menu-mobile">
+        <ul>
+          <li><a href="#home">HOME</a></li>
+          <li><a href="#news">MODALIDADES</a></li>
+          <li><a href="{% url 'agenda' %}">AGENDA</a></li>
+          <li><a href="#footer">CONTATO</a></li>
+          <li><a href="{% url 'login' %}">LOGIN</a></li>
+        </ul>
+      </div>
+      <div class="btn"><ion-icon name="grid-sharp"></ion-icon></div>
+    </header>
+    <main>
+      <!--      HOME       -->
+      <section id="home">
+        <div class="container">
+          <div class="content">
+              {% block body %}
+              {% endblock %}
+          </div>
+        </div>
+      </section>
+      <!--      NEWS     -->
+      <section id="news">
+        <div class="container">
+          <div class="title">
+            <div class="line"></div>
+            <h1>MODALIDADES</h1>
+          </div>
+          <div class="content">
+            <div class="box">
+              <h3>Hidroginástica</h3>
+              <img src="{% static 'aulas/hidroginastica.png' %}" alt="" />
+            </div>
+            <div class="box">
+              <h3>Musculação</h3>
+              <img src="{% static 'aulas/musulacao1.png' %}" alt="" />
+            </div>
+            <div class="box">
+              <h3>Natação</h3>
+              <img src="{% static 'aulas/natacaoinfantil.jpg' %}" alt="" />
+            </div>
+            <div class="box">
+              <h3>Pilates</h3>
+              <img src="{% static 'aulas/pilates.png' %}" alt="" />
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer>
+        <section id="footer">
+          <div class="container">
+            <div class="info">
+              <div class="box">
+                <h1>UNIDADE</h1>
+                <p>Av. Francisco Pereira de Castro, 52</p>
+                <p>Anhangabaú - Jundiaí-SP</p>
+                <p>CEP:13208-110</p>
+              </div>
+              <div class="box">
+                <h1>Sobre nós</h1>
+                <a href="">Suporte ao cliente</a>
+                <a href="">Sobre nós</a>
+                <a href="">Direitos autorais</a>
+              </div>
+              <div class="box">
+                <h1>Sociais</h1>
+                <a href=""><ion-icon name="logo-facebook"></ion-icon></a>
+                <a href=""><ion-icon name="logo-instagram"></ion-icon></a>
+                <a href=""><ion-icon name="logo-twitter"></ion-icon></a>
+              </div>
+            </div>
+            <div class="line"></div>
+            <div class="copyright">
+              <p>Todos os direitos reservados</p>
+            </div>
+          </div>
+        </section>
+      </footer>
+    <script
+      type="module"
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
+    ></script>
+    <script
+      nomodule
+      src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
+    ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+    <script src="{% static 'aulas/script.js' %}"></script>
+  </body>
 </html>
