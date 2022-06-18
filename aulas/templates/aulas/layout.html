@@ -10,6 +10,7 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css"
     />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'aulas/style.css' %}" />
   </head>
   <body>
@@ -23,8 +24,14 @@
           <li><a href="#news">MODALIDADES</a></li>
           <li><a href="{% url 'agenda' %}">AGENDA</a></li>
           <li><a href="#footer">CONTATO</a></li>
-          <li><a href="{% url 'login' %}">LOGIN</a></li>
           <li><a href="{% url 'calendar' %}">CALENDAR</a></li>
+          {% if request.user.is_authenticated %}
+          <li><a href="{% url 'index' %}">AULAS</a></li>
+          <li><a href="{% url 'logout' %}">LOGOUT</a></li>
+          <li>Usuário: {{ request.user.username }}</li>
+          {% else %}
+          <li><a href="{% url 'login' %}">LOGIN</a></li>
+          {% endif %}
         </ul>
       </div>
       <div class="menu-mobile">
@@ -33,7 +40,13 @@
           <li><a href="#news">MODALIDADES</a></li>
           <li><a href="{% url 'agenda' %}">AGENDA</a></li>
           <li><a href="#footer">CONTATO</a></li>
+          {% if request.user.is_authenticated %}
+          <li><a href="{% url 'index' %}">AULAS</a></li>
+          <li><a href="{% url 'logout' %}">LOGOUT</a></li>
+          <li>{{ request.user.username }}</li>
+          {% else %}
           <li><a href="{% url 'login' %}">LOGIN</a></li>
+          {% endif %}
         </ul>
       </div>
       <div class="btn"><ion-icon name="grid-sharp"></ion-icon></div>
@@ -41,13 +54,10 @@
     <main>
       <!--      HOME       -->
       <section id="home">
-        <div class="container">
-          <div class="content">
               {% block body %}
               {% endblock %}
-          </div>
-        </div>
       </section>
+      {% block news %}
       <!--      NEWS     -->
       <section id="news">
         <div class="container">
@@ -58,23 +68,24 @@
           <div class="content">
             <div class="box">
               <h3>Hidroginástica</h3>
-              <img src="{% static 'aulas/hidroginastica.png' %}" alt="" />
+              <img src="{% static 'aulas/hidroginastica copy.png' %}" alt="" />
             </div>
             <div class="box">
               <h3>Musculação</h3>
-              <img src="{% static 'aulas/musulacao1.png' %}" alt="" />
+              <img src="{% static 'aulas/musculacao.png' %}" alt="" />
             </div>
             <div class="box">
               <h3>Natação</h3>
-              <img src="{% static 'aulas/natacaoinfantil.jpg' %}" alt="" />
+              <img src="{% static 'aulas/natacao2.png' %}" alt="" />
             </div>
             <div class="box">
               <h3>Pilates</h3>
-              <img src="{% static 'aulas/pilates.png' %}" alt="" />
+              <img src="{% static 'aulas/pilates copy.png' %}" alt="" />
             </div>
           </div>
         </div>
       </section>
+      {% endblock %}
     </main>
     <footer>
         <section id="footer">
@@ -117,6 +128,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
     <script src="{% static 'aulas/script.js' %}"></script>
   </body>
 </html>

@@ -102,7 +102,7 @@ def agenda_view(request, extra_context=None):
     aulas = Agenda.objects.filter(data_aula__gte=yesterday).filter(aulas__username=username).order_by('data_aula')
 
     classes = Agenda.objects.all()
-    filtro = Agenda.objects.filter(data_aula__gte=yesterday)
+    filtro = Agenda.objects.exclude(aulas__username=username).filter(data_aula__gte=yesterday)
         
     after_day = request.GET.get('day__gte', None)
     extra_context = extra_context or {}

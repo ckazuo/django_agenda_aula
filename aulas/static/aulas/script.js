@@ -22,3 +22,22 @@ $('.card').owlCarousel({
 $('.btn').click(function(){
     $('.menu-mobile').slideToggle('show')
 })
+
+function  selectAula(evt, itemId) {
+    // declare variables
+    var i, count,  buttons, test;
+    buttons = document.getElementById("aulas").querySelectorAll(".aula");
+    console.log(itemId);
+    console.log(buttons);
+    test = document.getElementById("aulas");
+    console.log(test);
+    const test1 = document.querySelectorAll(".aula");
+    console.log(test1);
+    const test2 = document.querySelectorAll(".buttonaula");
+    console.log(test2);
+
+    // verify if the button was clicked
+
+
+
+}

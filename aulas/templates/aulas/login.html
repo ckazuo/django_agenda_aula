@@ -1,11 +1,36 @@
 {% extends "aulas/layout.html" %}
 {% block body %}
-    <div>
-    <form action="{% url 'login' %}" method="post">
-        {% csrf_token %}
-        <input type="text", name="username", placeholder="Username">
-        <input type="password", name="password", placeholder="Password">
-        <input type="submit", value="Login">
-    </form>
+<div class="container">
+    <div class="content">
+        <div class="row">
+            <div class="button">
+                <form action="{% url 'login' %}" method="post">
+                {% csrf_token %}
+                <div class="row">
+                    <label for="username">Usuario</label>
+                    <input type="text", name="username", placeholder="Username">
+                    <label for="password">Senha</label>
+                    <input type="password", name="password", placeholder="Password">
+                </div>
+                </br>
+                <div class="row">
+                    <button type="submit" class="btn2">
+                        LOGIN
+                    </button>
+                </div>
+                </form>
+            </div>
+        </div>
     </div>
+</div>
 {% endblock %}
+
+<h1>RESERVE SEU HORÁRIO AQUI</h1>
+<p>Viva uma nova experiência todos os dias</p>
+<div class="button">             
+  <form action="{% url 'login' %}">
+    <button type="submit" class="btn2">
+      RESERVE AQUI
+    </button>
+  </form>
+</div>

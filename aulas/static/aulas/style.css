@@ -67,6 +67,7 @@ section .container{
     background: url(background.PNG) no-repeat;
     background-size: cover;
 }
+
 #home .container .content{
     width: 50%;
     height: 80vh;

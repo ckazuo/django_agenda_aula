@@ -1,46 +1,49 @@
 {% extends "aulas/layout.html" %}
 {% block body %}
 
-    <div class="call">
+<div class="container">
+  <div class="content">
+  <div class="call">
     {% if message == 'Anonimo' %}
       
-        <h1>RESERVE SEU HORÁRIO AQUI</h1>
-        <p>Viva uma nova experiência todos os dias</p>
-        <div class="button">             
-          <form action="{% url 'login' %}">
-              <button type="submit" class="btn2">
-              RESERVE AQUI
-              </button>
-          </form>
-        </div>
+      <h1>RESERVE SEU HORÁRIO AQUI</h1>
+      <p>Viva uma nova experiência todos os dias</p>
+      <div class="button">             
+        <form action="{% url 'login' %}">
+          <button type="submit" class="btn2">
+            RESERVE AQUI
+          </button>
+        </form>
+      </div>
       
     {% else %}
 
-        <h2>Aulas Agendadas, {{ request.user.username }}</h2>
-        </br>
-        <ul>
-            {% if not aulas_user %}
-            <h3>Sem atividades agendadas</h3>
-            </br>
-            {% endif %}
-            {% for item in aulas_user %}
-            
-            <div class="list-group">
-                <ul href="#" class="list-group-item list-group-item-action active">
-                  <div class="d-flex w-100 justify-content-between">
-                    <small>{{ item.data_aula }}</small>
-                    <h3 class="mb-1">{{ item.aula.aula }}</h3>
-                  </div>
-                  <ul>
-                    <h5 class="mb-1">{{ item.hora_inicio }} {{ item.hora_fim }}</h5>
-                  </ul>
-                </ul>
-            </br>
-            </div>
-            {% endfor %}
-        </ul>
-        <a href="{% url 'logout' %}">Logout</a>
-    {% endif %}
-    </div>
+      <h2>Aulas Agendadas</h2>
+      </br>
 
+      {% if not aulas_user %}
+
+        <h3>Sem atividades agendadas</h3>
+        </br>
+  
+      {% else %}
+  
+      <div class="row">
+            {% for item in aulas_user %}
+            <div class="col" style="background: rgba(234, 225, 208, 0.73); ">
+                <h5 >{{ item.data_aula }}</h5>
+
+                  <h3>{{ item.aula.aula }}</h3>
+                  <small>{{ item.hora_inicio }} {{ item.hora_fim }}</small>
+
+                </div>                  
+            {% endfor %}
+      </div>            
+
+      {% endif %}
+
+    {% endif %}
+  </div>
+</div>
+</div>  
 {% endblock %}
