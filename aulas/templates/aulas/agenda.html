@@ -12,35 +12,40 @@
         <h1>Próximas Aulas</h1>
         <p>Selecione as aulas que deseje fazer</p>
 
-          <div class="row">
-            {% for item in filtro %}
-            <div class="col" id="aulas" style="background: rgba(234, 225, 208, 0.73); ">
-              <button type="button" onclick="selectAula(event, '{{item.id}}')" class="buttonaula" id="agendaButton" value="{{item.id}}" style="background: rgba(239, 238, 236, 0.73);">
-                <h5>{{ item.data_aula }}</h5>
-                <h3>{{ item.aula.aula }}</h3>
-                <h5>{{ item.max_alunos }}</h5>
-                <h5>{{ item.numero_alunos }}</h5>
-                <small>{{ item.hora_inicio }} {{ item.hora_fim }}</small>
-              </button>
+        <form method="POST" action="{% url 'marcar' %}" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="row" id="Aulas" >
+            {% for item in filtro %}          
+            <div class="form-check" id="aulas" style="background: rgba(234, 225, 208, 0.73); ">
+              <input class="form-check-input" name="item" type="checkbox" value="{{item.id}}" id="flexCheckDefault">
+              <label class="form-check-label" for="flexCheckDefault">
+                <button type="button" onclick="selectAula(event, '{{item.id}}')" class="checkboxaula" id="agendaButton" value="{{item.id}}" style="background: rgba(239, 238, 236, 0.73);">
+                  <h5>{{ item.data_aula }}</h5>
+                  <h4>{{ item.aula.aula }}</h4>
+                  <small>Max {{ item.max_alunos }} Atual {{ item.numero_alunos }}</small>
+                </br>
+                  <input id="max_alunos" type="hidden" name="max_alunos" value="{{ item.max_alunos }}" />
+                  <input id="numero_alunos" type="hidden" name="numero_alunos" value="{{ item.numero_alunos }}" />
+                  <small>{{ item.hora_inicio }} {{ item.hora_fim }}</small>
+                </button>              
+              </label>
             </div>
             {% endfor %}    
           </div>
 
-
         </br>
-        <div class="row">
-          <div class="button">             
-            <form action="{% url 'login' %}">
-              <button type="submit" class="btn2">
-                MARCAR AULA
-              </button>
-            </form>
+          <div class="row">
+            <div class="button">             
+                <button type="submit" class="btn2">
+                  MARCAR AULA
+                </button>
+            </div>
           </div>
+        </form>
 
-        </div>
-
-
-        
+        {% if alerta %}
+          <h2>{{alerta}}</h2>
+        {% endif %}    
 
     {% endif %}
     </div>
