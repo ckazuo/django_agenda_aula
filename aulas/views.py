@@ -163,3 +163,29 @@ def calendar_view(request, extra_context=None):
     return render(request, "aulas/calendar.html", {
         "calendar"   : mark_safe(html_calendar),
     } )
+
+def marcar_view(request):
+    
+    username = request.user.id
+    if request.method == "POST":
+        print(request.POST)
+        items = request.POST.getlist("item")
+        print(items)
+        for item in items:
+            print(item)
+            # implement logic to add the item id (aula) to the user
+            agenda = Agenda.objects.get(id=item)
+            user = Usuario.objects.get(username=username)
+            user.agendas.add(agenda)
+            # implement logic to update the item id (aula) increase numero_alunos field
+            numero = agenda.numero_alunos
+            Agenda.objects.filter(id=item).update(numero_alunos=numero+1)
+            alerta = "AULA MARCADA!!"
+    
+    yesterday = datetime.date.today()-datetime.timedelta(days=1)
+    locale.setlocale(locale.LC_ALL, 'pt_BR.utf8')
+    filtro = Agenda.objects.exclude(aulas__username=username).filter(data_aula__gte=yesterday)
+    return render(request, "aulas/agenda.html", {
+        "filtro"     : filtro,
+        "alerta" : alerta,
+    } )    

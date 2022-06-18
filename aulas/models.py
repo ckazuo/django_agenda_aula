@@ -21,7 +21,7 @@ class Agenda(models.Model):
         verbose_name_plural="agendas"
         
     def __str__(self):
-        return f"{self.id}: {self.data_aula} {self.hora_inicio} {self.hora_fim} {self.aula} Capacidade {self.max_alunos}"
+        return f"{self.id}: {self.data_aula} {self.hora_inicio} {self.hora_fim} {self.aula} Capacidade {self.max_alunos} Alunos {self.numero_alunos}"
 
 class Usuario(models.Model):
     username = models.ForeignKey(

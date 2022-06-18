@@ -23,21 +23,60 @@ $('.btn').click(function(){
     $('.menu-mobile').slideToggle('show')
 })
 
+document.getElementById("aulas").onload = function() {verifyButton()};
+
 function  selectAula(evt, itemId) {
     // declare variables
     var i, count,  buttons, test;
-    buttons = document.getElementById("aulas").querySelectorAll(".aula");
+    buttons = document.querySelectorAll(".checkboxaula");
     console.log(itemId);
     console.log(buttons);
-    test = document.getElementById("aulas");
-    console.log(test);
-    const test1 = document.querySelectorAll(".aula");
-    console.log(test1);
-    const test2 = document.querySelectorAll(".buttonaula");
-    console.log(test2);
 
     // verify if the button was clicked
+    for (i=0; i < buttons.length; i++) {
 
+        if (buttons[i].value === itemId) {
+            const max = buttons[i].querySelector("input#max_alunos").value;
+            const numero = buttons[i].querySelector("input#numero_alunos").value;
+            console.log("Checking the max_alunos");
+            console.log(max);
+            console.log("Checking the numero_alunos");
+            console.log(numero);
+            if (max === numero) {
+                console.log("Máxima capacidade"); 
+                checkboxes = document.querySelectorAll(".form-check-input");
+                for (i=0; i < checkboxes.length; i++) {
+                    if (checkboxes[i].value === itemId) {
+                        checkboxes[i].disabled = "True";
+                    }
+                }
+            }
+        }
+    }
 
+}
+
+function  verifyButton() {
+    // declare variables
+    var i, j, buttons;
+    buttons = document.querySelectorAll(".form-check");
+    console.log(buttons);
+    console.log("Load");
+
+    // verify if the checkbox need to be disabled
+    for (i=0; i < buttons.length; i++) {
+        const max = buttons[i].querySelector("input#max_alunos").value;
+        const numero = buttons[i].querySelector("input#numero_alunos").value;
+        console.log("Checking the max_alunos");
+        console.log(max);
+        console.log("Checking the numero_alunos");
+        console.log(numero);
+        if (max === numero) {
+            console.log("Máxima capacidade"); 
+            checkboxes = buttons[i].querySelector(".form-check-input");
+            checkboxes.disabled = "True";
+            checkboxes.style.backgroundColor = "Red";
+        }
+    }
 
 }
