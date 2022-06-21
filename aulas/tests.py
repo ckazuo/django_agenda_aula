@@ -5,7 +5,7 @@ from django.test import Client
 # Create your tests here.
 class SimpleTest(unittest.TestCase):
     def setUp(self) -> None:
-        self.client = Clietn()
+        self.client = Client()
         return super().setUp()
 
     def test_indexpageresponse(self):
