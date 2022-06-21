@@ -16,6 +16,7 @@
           {% csrf_token %}
           <div class="row" id="Aulas" >
             {% for item in filtro %}          
+            <div class="col">
             <div class="form-check" id="aulas" style="background: rgba(234, 225, 208, 0.73); ">
               <input class="form-check-input" name="item" type="checkbox" value="{{item.id}}" id="flexCheckDefault">
               <label class="form-check-label" for="flexCheckDefault">
@@ -30,6 +31,7 @@
                 </button>              
               </label>
             </div>
+          </div>
             {% endfor %}    
           </div>
 
@@ -54,6 +56,3 @@
 
 {% endblock %}
 
-{% block news %}
-</br>
-{% endblock %}
